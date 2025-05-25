@@ -3,30 +3,46 @@ package pl.wsb.fitnesstracker.training.internal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wsb.fitnesstracker.training.api.Training;
+import pl.wsb.fitnesstracker.training.internal.ActivityType;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * Repository interface for {@link Training} entities.
- * Provides CRUD operations and custom query methods related to trainings.
+ * Interfejs repozytorium dla encji {@link Training}.
+ * Zapewnia podstawowe operacje CRUD oraz niestandardowe metody zapytań dotyczące treningów.
  */
 public interface TrainingRepository extends JpaRepository<Training, Long> {
     /**
-     * Deletes all trainings associated with a specific user ID.
-     * This operation is transactional to ensure data integrity.
+     * Usuwa wszystkie treningi powiązane z użytkownikiem o podanym ID.
+     * Operacja oznaczona jako transakcyjna, aby zapewnić integralność danych.
      *
-     * @param userId the ID of the user whose trainings should be deleted
+     * @param userId ID użytkownika, którego treningi mają zostać usunięte
      */
     @Transactional
     void deleteByUser_Id(Long userId);
 
-    // Finds trainings by userId directly via query (Spring Data magic)
+    /**
+     * Znajduje listę treningów przypisanych do użytkownika o podanym ID.
+     *
+     * @param userId ID użytkownika
+     * @return lista treningów użytkownika
+     */
     List<Training> findByUser_Id(Long userId);
 
-    // Finds trainings by activity type (direct DB query)
+    /**
+     * Znajduje treningi o określonym typie aktywności.
+     *
+     * @param activityType typ aktywności treningu
+     * @return lista treningów o danym typie aktywności
+     */
     List<Training> findByActivityType(ActivityType activityType);
 
-    // Finds trainings finished after the given date (direct DB query)
+    /**
+     * Znajduje treningi, które zakończyły się po podanej dacie.
+     *
+     * @param endTime data końca treningu
+     * @return lista treningów zakończonych po dacie endTime
+     */
     List<Training> findByEndTimeAfter(Date endTime);
 }
