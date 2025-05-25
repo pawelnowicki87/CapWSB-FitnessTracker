@@ -4,6 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wsb.fitnesstracker.training.api.Training;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Repository interface for {@link Training} entities.
  * Provides CRUD operations and custom query methods related to trainings.
@@ -17,4 +20,13 @@ public interface TrainingRepository extends JpaRepository<Training, Long> {
      */
     @Transactional
     void deleteByUser_Id(Long userId);
+
+    // Finds trainings by userId directly via query (Spring Data magic)
+    List<Training> findByUser_Id(Long userId);
+
+    // Finds trainings by activity type (direct DB query)
+    List<Training> findByActivityType(ActivityType activityType);
+
+    // Finds trainings finished after the given date (direct DB query)
+    List<Training> findByEndTimeAfter(Date endTime);
 }
