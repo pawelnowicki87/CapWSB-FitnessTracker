@@ -305,6 +305,63 @@
           }
         }
       ]
+    },
+    {
+      "name": "Email & Report",
+      "item": [
+        {
+          "name": "Send Test Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "to",
+                  "value": "test@example.com",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:9090/v1/mails/send-test",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "mails", "send-test"]
+            }
+          }
+        },
+        {
+          "name": "Send Monthly Report Now",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "http://localhost:9090/v1/reports/monthly",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "reports", "monthly"]
+            }
+          }
+        }
+      ]
     }
   ]
 }
