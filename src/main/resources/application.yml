@@ -12,3 +12,18 @@ spring:
       enabled: true
   profiles:
     active: loadInitialData
+
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: 85d71fd747b027
+    password: 6bd455e7fc6dd2
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+mail:
+  from: no-reply@fitnesstracker.com

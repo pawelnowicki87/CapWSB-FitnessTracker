@@ -5,140 +5,363 @@
   },
   "item": [
     {
-      "name": "Get All Users",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:9090/v1/users",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "9090",
-          "path": ["v1", "users"]
-        }
-      }
-    },
-    {
-      "name": "Get All Simple Users",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:9090/v1/users/simple",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "9090",
-          "path": ["v1", "users", "simple"]
-        }
-      }
-    },
-    {
-      "name": "Get User By ID",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:9090/v1/users/2",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "9090",
-          "path": ["v1", "users", "2"]
-        }
-      }
-    },
-    {
-      "name": "Search Users By Email Fragment",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:9090/v1/users/email?email=domain",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "9090",
-          "path": ["v1", "users", "email"],
-          "query": [
-            {
-              "key": "email",
-              "value": "domain"
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "v1",
+                "users"
+              ]
             }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Get Users Older Than Date",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:9090/v1/users/older/2000-01-01",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "9090",
-          "path": ["v1", "users", "older", "2000-01-01"]
-        }
-      }
-    },
-    {
-      "name": "Create User",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"birthdate\": \"1990-01-01\",\n  \"email\": \"john.doe@example.com\"\n}"
         },
-        "url": {
-          "raw": "http://localhost:9090/v1/users",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "9090",
-          "path": ["v1", "users"]
-        }
-      }
-    },
-    {
-      "name": "Update User",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+        {
+          "name": "Get All Simple Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/users/simple",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "v1",
+                "users",
+                "simple"
+              ]
+            }
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"firstName\": \"Mike\",\n  \"lastName\": \"Scott\",\n  \"birthdate\": \"1999-09-29\",\n  \"email\": \"mike.scott@example.com\"\n}"
         },
-        "url": {
-          "raw": "http://localhost:9090/v1/users/2",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "9090",
-          "path": ["v1", "users", "2"]
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/users/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "v1",
+                "users",
+                "2"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Users By Email Fragment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/users/email?email=domain",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "v1",
+                "users",
+                "email"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "domain"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Users Older Than Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/users/older/2000-01-01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "v1",
+                "users",
+                "older",
+                "2000-01-01"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"birthdate\": \"1990-01-01\",\n  \"email\": \"john.doe@example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9090/v1/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "v1",
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Mike\",\n  \"lastName\": \"Scott\",\n  \"birthdate\": \"1999-09-29\",\n  \"email\": \"mike.scott@example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9090/v1/users/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "v1",
+                "users",
+                "2"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/users/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9090",
+              "path": [
+                "v1",
+                "users",
+                "1"
+              ]
+            }
+          }
         }
-      }
+      ]
+
     },
     {
-      "name": "Delete User",
-      "request": {
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:9090/v1/users/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "9090",
-          "path": ["v1", "users", "1"]
+      "name": "Training",
+      "item": [
+        {
+          "name": "Get All Trainings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/trainings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "trainings"]
+            }
+          }
+        },
+        {
+          "name": "Get Trainings By User ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/trainings/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "trainings", "2"]
+            }
+          }
+        },
+        {
+          "name": "Get Trainings By Activity Type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/trainings/activityType?activityType=RUNNING",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "trainings", "activityType"],
+              "query": [
+                {
+                  "key": "activityType",
+                  "value": "RUNNING"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Finished Trainings After Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9090/v1/trainings/finished/2024-01-19",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "trainings", "finished", "2024-01-19"]
+            }
+          }
+        },
+        {
+          "name": "Create Training",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"2\",\n  \"startTime\": \"2024-05-01T11:00:00\",\n  \"endTime\": \"2024-05-01T12:00:00\",\n  \"activityType\": \"RUNNING\",\n  \"distance\": 5.0,\n  \"averageSpeed\": 10.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9090/v1/trainings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "trainings"]
+            }
+          }
+        },
+        {
+          "name": "Update Training",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"2\",\n  \"startTime\": \"2024-04-01T10:00:00\",\n  \"endTime\": \"2024-04-01T11:00:00\",\n  \"activityType\": \"TENNIS\",\n  \"distance\": 0.0,\n  \"averageSpeed\": 0.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:9090/v1/trainings/5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "trainings", "5"]
+            }
+          }
         }
-      }
+      ]
+    },
+    {
+      "name": "Email & Report",
+      "item": [
+        {
+          "name": "Send Test Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "to",
+                  "value": "test@example.com",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:9090/v1/mails/send-test",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "mails", "send-test"]
+            }
+          }
+        },
+        {
+          "name": "Send Monthly Report Now",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "http://localhost:9090/v1/reports/monthly",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9090",
+              "path": ["v1", "reports", "monthly"]
+            }
+          }
+        }
+      ]
     }
   ]
 }
