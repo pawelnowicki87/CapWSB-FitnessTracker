@@ -2,14 +2,14 @@ package pl.wsb.fitnesstracker.training.internal;
 
 import org.springframework.stereotype.Component;
 import pl.wsb.fitnesstracker.training.api.Training;
-import pl.wsb.fitnesstracker.training.api.TrainingRequestBody;
 import pl.wsb.fitnesstracker.training.api.TrainingDto;
+import pl.wsb.fitnesstracker.training.api.TrainingRequestBody;
 import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.internal.UserMapper;
 
 /**
- * Komponent odpowiedzialny za mapowanie obiektów treningów pomiędzy warstwą
- * domenową (encje), DTO oraz ciałem żądania API.
+ * Komponent odpowiedzialny za mapowanie danych treningowych
+ * między warstwą domenową (encje), DTO a obiektami wejściowymi żądań API.
  */
 @Component
 public class TrainingMapper {
@@ -17,19 +17,19 @@ public class TrainingMapper {
     private final UserMapper userMapper;
 
     /**
-     * Konstruktor z wstrzykiwaniem zależności mappera użytkownika.
+     * Inicjalizuje komponent z zależnością do mappera użytkownika.
      *
-     * @param userMapper mapper obiektów użytkownika
+     * @param userMapper komponent mapujący dane użytkowników
      */
     public TrainingMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 
     /**
-     * Konwertuje encję treningu na obiekt DTO treningu.
+     * Przekształca encję treningu na obiekt DTO.
      *
-     * @param training encja treningu
-     * @return obiekt DTO reprezentujący trening
+     * @param training encja treningu pobrana z bazy danych
+     * @return obiekt {@link TrainingDto} gotowy do przesłania przez API
      */
     public TrainingDto toDto(Training training) {
         return new TrainingDto(
@@ -44,11 +44,12 @@ public class TrainingMapper {
     }
 
     /**
-     * Konwertuje obiekt DTO treningu na encję treningu, przypisaną do użytkownika.
+     * Tworzy encję treningu na podstawie obiektu DTO i powiązanego użytkownika.
+     * Może być używane do operacji zapisu lub aktualizacji.
      *
-     * @param dto obiekt DTO treningu
-     * @param user użytkownik przypisany do treningu
-     * @return encja treningu
+     * @param dto obiekt DTO zawierający dane treningu
+     * @param user właściciel treningu
+     * @return nowa instancja encji treningu
      */
     public Training toEntity(TrainingDto dto, User user) {
         return new Training(
@@ -62,14 +63,16 @@ public class TrainingMapper {
     }
 
     /**
-     * Konwertuje ciało żądania treningu na encję treningu, przypisaną do użytkownika.
+     * Tworzy encję treningu na podstawie danych wejściowych przesłanych w żądaniu.
+     * Wymaga przekazania użytkownika, do którego trening ma zostać przypisany.
      *
-     * @param request ciało żądania treningu (TrainingRequestBody)
-     * @param user użytkownik przypisany do treningu
-     * @return encja treningu
+     * @param request dane treningu pochodzące z ciała żądania
+     * @param user użytkownik powiązany z treningiem
+     * @return nowy obiekt encji treningu
      */
     public Training toEntity(TrainingRequestBody request, User user) {
-        return new Training(user,
+        return new Training(
+                user,
                 request.getStartTime(),
                 request.getEndTime(),
                 request.getActivityType(),

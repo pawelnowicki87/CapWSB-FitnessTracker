@@ -6,9 +6,15 @@ import pl.wsb.fitnesstracker.training.internal.ActivityType;
 
 import java.util.Date;
 /**
- * Klasa reprezentująca dane wejściowe treningu przesyłane przez użytkownika.
- * Używana podczas tworzenia lub aktualizacji obiektu treningowego przez API.
+ * Model danych wejściowych treningu przekazywanych przez użytkownika w żądaniach API.
+ *
+ * <p>
+ * Obiekt wykorzystywany do tworzenia lub modyfikowania treningów, zawierający dane takie jak
+ * czas rozpoczęcia, czas zakończenia oraz typ aktywności. Stanowi warstwę pośrednią między
+ * interfejsem użytkownika a logiką domenową aplikacji.
+ * </p>
  */
+
 @Getter
 @Setter
 public class TrainingRequestBody {

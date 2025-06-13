@@ -8,9 +8,15 @@ import pl.wsb.fitnesstracker.user.api.UserDto;
 import java.util.Date;
 
 /**
- * Klasa reprezentująca DTO treningu.
- * Służy do transferu danych treningu przez API.
+ * Reprezentacja danych treningu używana do komunikacji między warstwami aplikacji.
+ *
+ * <p>
+ * Obiekt DTO (Data Transfer Object) zawierający podstawowe informacje o pojedynczym treningu,
+ * takie jak czas rozpoczęcia, zakończenia, typ aktywności i powiązany użytkownik.
+ * Używany głównie w warstwie API do przesyłania danych bez ujawniania szczegółów implementacyjnych encji.
+ * </p>
  */
+
 @Getter
 @Setter
 public class TrainingDto {

@@ -4,57 +4,58 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Interface (API) for modifying and querying {@link User} entities.
- * Implementing classes are responsible for database operations such as creating,
- * updating, deleting, and searching users.
+ * Serwis aplikacyjny odpowiedzialny za zarządzanie encjami {@link User}.
  *
- * This interface defines application-level services exposed to other modules.
+ * <p>
+ * Interfejs udostępnia operacje tworzenia, modyfikacji, usuwania oraz wyszukiwania użytkowników.
+ * Implementacje tej klasy odpowiadają za logikę biznesową i współpracę z warstwą danych.
+ * </p>
  */
 public interface UserService {
 
     /**
-     * Creates a new user in the system.
-     * The user must not already have an ID (i.e., it should be a new user).
+     * Tworzy nowego użytkownika w systemie.
+     * Obiekt nie powinien zawierać zdefiniowanego identyfikatora.
      *
-     * @param user the user to create
-     * @return the saved user with a generated ID
-     * @throws IllegalArgumentException if the user already has an ID
+     * @param user użytkownik do utworzenia
+     * @return zapisany użytkownik z nadanym ID
+     * @throws IllegalArgumentException jeśli użytkownik zawiera już ID
      */
     User createUser(User user);
 
     /**
-     * Deletes the user with the given ID.
-     * Also deletes all trainings associated with the user.
+     * Usuwa użytkownika o podanym identyfikatorze.
+     * Operacja usuwa również wszystkie powiązane treningi.
      *
-     * @param id the ID of the user to delete
-     * @throws IllegalArgumentException if no user with the given ID exists
+     * @param id identyfikator użytkownika do usunięcia
+     * @throws IllegalArgumentException jeśli użytkownik nie istnieje
      */
     void deleteUser(Long id);
 
     /**
-     * Updates an existing user's information.
-     * If the user does not exist, an exception is thrown.
+     * Aktualizuje dane istniejącego użytkownika.
      *
-     * @param id the ID of the user to update
-     * @param updatedUser the new user data to apply
-     * @return the updated user
-     * @throws IllegalArgumentException if the user with the given ID is not found
+     * @param id identyfikator użytkownika do aktualizacji
+     * @param updatedUser dane do nadpisania
+     * @return zaktualizowany użytkownik
+     * @throws IllegalArgumentException jeśli użytkownik nie zostanie odnaleziony
      */
     User updateUser(Long id, User updatedUser);
 
     /**
-     * Finds users whose email contains the given fragment (case-insensitive).
+     * Wyszukuje użytkowników, których adres e-mail zawiera podany fragment (niewrażliwy na wielkość liter).
      *
-     * @param fragment the email fragment to search for
-     * @return list of users whose email contains the given fragment
+     * @param fragment fragment adresu e-mail
+     * @return lista użytkowników pasujących do wzorca
      */
     List<User> findByPartialEmail(String fragment);
 
     /**
-     * Finds users who are older than the given age threshold (i.e., born before the specified date).
+     * Zwraca użytkowników starszych niż określony próg wieku,
+     * czyli takich, których data urodzenia jest wcześniejsza niż wskazana.
      *
-     * @param ageThreshold the maximum birthdate (e.g., LocalDate.now().minusYears(18))
-     * @return list of users older than the specified age
+     * @param ageThreshold maksymalna dopuszczalna data urodzenia (np. LocalDate.now().minusYears(18))
+     * @return lista użytkowników spełniających warunek wieku
      */
     List<User> findOlderThan(LocalDate ageThreshold);
 }

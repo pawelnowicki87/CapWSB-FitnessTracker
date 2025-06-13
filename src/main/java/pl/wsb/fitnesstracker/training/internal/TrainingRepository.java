@@ -3,46 +3,46 @@ package pl.wsb.fitnesstracker.training.internal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wsb.fitnesstracker.training.api.Training;
-import pl.wsb.fitnesstracker.training.internal.ActivityType;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * Interfejs repozytorium dla encji {@link Training}.
- * Zapewnia podstawowe operacje CRUD oraz niestandardowe metody zapytań dotyczące treningów.
+ * Repozytorium JPA dla encji {@link Training}.
+ * Udostępnia standardowe operacje CRUD oraz dodatkowe metody wyszukiwania treningów według użytkownika, typu aktywności i daty.
  */
 public interface TrainingRepository extends JpaRepository<Training, Long> {
+
     /**
-     * Usuwa wszystkie treningi powiązane z użytkownikiem o podanym ID.
-     * Operacja oznaczona jako transakcyjna, aby zapewnić integralność danych.
+     * Usuwa wszystkie treningi powiązane z użytkownikiem o wskazanym identyfikatorze.
+     * Operacja wykonywana w ramach transakcji.
      *
-     * @param userId ID użytkownika, którego treningi mają zostać usunięte
+     * @param userId identyfikator użytkownika, którego treningi mają zostać usunięte
      */
     @Transactional
     void deleteByUser_Id(Long userId);
 
     /**
-     * Znajduje listę treningów przypisanych do użytkownika o podanym ID.
+     * Zwraca wszystkie treningi przypisane do użytkownika o danym ID.
      *
-     * @param userId ID użytkownika
-     * @return lista treningów użytkownika
+     * @param userId identyfikator użytkownika
+     * @return lista treningów należących do użytkownika
      */
     List<Training> findByUser_Id(Long userId);
 
     /**
-     * Znajduje treningi o określonym typie aktywności.
+     * Zwraca wszystkie treningi o określonym typie aktywności.
      *
-     * @param activityType typ aktywności treningu
-     * @return lista treningów o danym typie aktywności
+     * @param activityType typ aktywności (np. RUNNING, SWIMMING)
+     * @return lista treningów zgodnych z danym typem aktywności
      */
     List<Training> findByActivityType(ActivityType activityType);
 
     /**
-     * Znajduje treningi, które zakończyły się po podanej dacie.
+     * Zwraca treningi, które zakończyły się po wskazanej dacie.
      *
-     * @param endTime data końca treningu
-     * @return lista treningów zakończonych po dacie endTime
+     * @param endTime data graniczna zakończenia treningu
+     * @return lista treningów zakończonych po dacie {@code endTime}
      */
     List<Training> findByEndTimeAfter(Date endTime);
 }

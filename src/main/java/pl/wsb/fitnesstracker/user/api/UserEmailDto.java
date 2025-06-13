@@ -3,12 +3,14 @@ package pl.wsb.fitnesstracker.user.api;
 import jakarta.annotation.Nullable;
 
 /**
- * Rekord reprezentujący uproszczony DTO użytkownika,
- * zawierający tylko identyfikator i adres e-mail.
- * Służy do zwracania podstawowych informacji o użytkowniku,
- * np. w wynikach wyszukiwania po fragmencie adresu e-mail.
+ * Uproszczony DTO użytkownika zawierający tylko identyfikator i adres e-mail.
  *
- * @param id identyfikator użytkownika (może być null, np. przy tworzeniu nowego obiektu)
+ * <p>
+ * Wykorzystywany do zwracania podstawowych danych identyfikacyjnych,
+ * np. w listach wyników wyszukiwania lub w relacjach między obiektami.
+ * </p>
+ *
+ * @param id    identyfikator użytkownika
  * @param email adres e-mail użytkownika
  */
 public record UserEmailDto(

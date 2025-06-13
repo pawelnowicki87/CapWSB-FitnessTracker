@@ -7,35 +7,57 @@ import lombok.*;
 import java.time.LocalDate;
 
 /**
- * Entity representing a User in the system.
+ * Encja reprezentująca użytkownika systemu.
+ * Zawiera podstawowe dane identyfikacyjne oraz kontaktowe.
  */
 @Entity
 @Table(name = "users")
 @Getter
-@Setter // <--- Dodaje wszystkie wymagane settery
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class User {
 
+    /**
+     * Unikalny identyfikator użytkownika (generowany automatycznie).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Nullable
     private Long id;
 
+    /**
+     * Imię użytkownika (pole wymagane).
+     */
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    /**
+     * Nazwisko użytkownika (pole wymagane).
+     */
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    /**
+     * Data urodzenia użytkownika.
+     */
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
 
+    /**
+     * Adres e-mail użytkownika (musi być unikalny).
+     */
     @Column(nullable = false, unique = true)
     private String email;
 
     /**
-     * All-args constructor (used for creating new users).
+     * Konstruktor tworzący nowego użytkownika.
+     * Używany np. przy rejestracji lub inicjalizacji danych.
+     *
+     * @param firstName imię
+     * @param lastName nazwisko
+     * @param birthdate data urodzenia
+     * @param email adres e-mail
      */
     public User(
             final String firstName,

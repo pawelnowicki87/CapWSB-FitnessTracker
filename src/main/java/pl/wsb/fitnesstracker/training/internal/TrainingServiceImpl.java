@@ -14,10 +14,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Implementacja serwisu zarządzającego treningami.
- * Udostępnia metody do wyszukiwania, tworzenia, aktualizacji i usuwania treningów.
- * Wykorzystuje {@link TrainingRepository} do operacji na bazie danych
- * oraz {@link TrainingMapper} do konwersji między encjami a DTO.
+ * Implementacja serwisu odpowiedzialnego za operacje na treningach.
+ * Oferuje metody do tworzenia, aktualizacji, usuwania i pobierania treningów,
+ * korzystając z {@link TrainingRepository} oraz {@link TrainingMapper}.
  */
 @Service
 @RequiredArgsConstructor
@@ -27,9 +26,9 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     private final TrainingMapper trainingMapper;
 
     /**
-     * Pobiera wszystkie treningi dostępne w systemie.
+     * Zwraca wszystkie treningi z bazy danych.
      *
-     * @return lista wszystkich treningów jako DTO
+     * @return lista treningów w postaci DTO
      */
     @Override
     public List<TrainingDto> findAll() {
@@ -40,9 +39,9 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     }
 
     /**
-     * Pobiera treningi przypisane do użytkownika o podanym ID.
+     * Zwraca wszystkie treningi przypisane do użytkownika o podanym ID.
      *
-     * @param userId ID użytkownika
+     * @param userId identyfikator użytkownika
      * @return lista treningów danego użytkownika jako DTO
      */
     @Override
@@ -54,10 +53,10 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     }
 
     /**
-     * Pobiera treningi o określonym typie aktywności.
+     * Zwraca treningi o określonym typie aktywności.
      *
-     * @param activityType typ aktywności
-     * @return lista treningów o danym typie jako DTO
+     * @param activityType typ aktywności (np. RUNNING, CYCLING)
+     * @return lista treningów jako DTO
      */
     @Override
     public List<TrainingDto> findAllByActivityType(ActivityType activityType) {
@@ -68,10 +67,10 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     }
 
     /**
-     * Pobiera treningi zakończone po określonej dacie.
+     * Zwraca treningi, które zakończyły się po określonej dacie.
      *
-     * @param afterTime data zakończenia po której treningi mają być zwrócone
-     * @return lista treningów zakończonych po podanej dacie jako DTO
+     * @param afterTime data graniczna (LocalDate)
+     * @return lista treningów zakończonych po tej dacie w postaci DTO
      */
     @Override
     public List<TrainingDto> findAllFinishedAfter(LocalDate afterTime) {
@@ -83,10 +82,10 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     }
 
     /**
-     * Tworzy nowy trening na podstawie przesłanego ciała żądania oraz użytkownika.
+     * Tworzy nowy trening na podstawie danych wejściowych i przypisanego użytkownika.
      *
-     * @param body dane treningu do utworzenia
-     * @param user użytkownik, do którego przypisany jest trening
+     * @param body dane wejściowe treningu
+     * @param user właściciel treningu
      * @return utworzony trening jako DTO
      */
     @Override
@@ -98,13 +97,13 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     }
 
     /**
-     * Aktualizuje istniejący trening o podanym ID na podstawie przesłanych danych i użytkownika.
+     * Aktualizuje istniejący trening na podstawie podanego ID i nowych danych.
      *
-     * @param trainingId ID treningu do aktualizacji
+     * @param trainingId identyfikator treningu
      * @param body nowe dane treningu
      * @param user użytkownik powiązany z treningiem
      * @return zaktualizowany trening jako DTO
-     * @throws IllegalArgumentException jeśli trening o podanym ID nie istnieje
+     * @throws IllegalArgumentException jeśli trening nie istnieje
      */
     @Override
     @Transactional
@@ -124,9 +123,9 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     }
 
     /**
-     * Usuwa wszystkie treningi przypisane do użytkownika o podanym ID.
+     * Usuwa wszystkie treningi przypisane do użytkownika o wskazanym identyfikatorze.
      *
-     * @param userId ID użytkownika, którego treningi mają zostać usunięte
+     * @param userId identyfikator użytkownika
      */
     @Override
     @Transactional
@@ -135,10 +134,10 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
     }
 
     /**
-     * Pobiera użytkownika powiązanego z treningiem o podanym ID.
+     * Zwraca użytkownika przypisanego do treningu o podanym ID.
      *
-     * @param trainingId ID treningu
-     * @return Optional zawierający użytkownika lub pusty, jeśli trening nie istnieje
+     * @param trainingId identyfikator treningu
+     * @return {@link Optional} z użytkownikiem, jeśli trening istnieje
      */
     @Override
     public Optional<User> getTraining(Long trainingId) {

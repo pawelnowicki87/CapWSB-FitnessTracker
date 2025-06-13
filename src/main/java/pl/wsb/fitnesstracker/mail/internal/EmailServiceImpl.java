@@ -20,19 +20,19 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
 
     /**
-     * Sends an email using the information provided in the given {@link EmailDto}.
-     * If the sending process fails, logs the error.
+     * Sends a simple email using the data provided in the {@link EmailDto}.
+     * Logs an error message if the email could not be sent.
      *
-     * @param emailDto Data transfer object containing the recipient's address, subject, and content of the email.
+     * @param emailDto DTO containing the recipient's address, subject, and message body.
      */
     @Override
     public void send(EmailDto emailDto) {
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(emailDto.toAddress());
-            message.setSubject(emailDto.subject());
-            message.setText(emailDto.content());
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(emailDto.toAddress());
+        message.setSubject(emailDto.subject());
+        message.setText(emailDto.content());
 
+        try {
             mailSender.send(message);
             log.info("Email sent successfully to {}", emailDto.toAddress());
         } catch (Exception e) {
@@ -40,3 +40,5 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 }
+
+

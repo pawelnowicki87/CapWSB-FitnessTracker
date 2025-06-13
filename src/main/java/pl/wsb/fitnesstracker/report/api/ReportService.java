@@ -1,14 +1,15 @@
 package pl.wsb.fitnesstracker.report.api;
 
 /**
- * Service interface for generating and sending training reports.
+ * Service interface for handling user training report distribution.
  */
 public interface ReportService {
+
     /**
-     * Sends monthly training summary reports to all users.
+     * Sends a summary report of user training activity for the previous month.
      * <p>
-     * This method is typically scheduled to run automatically (e.g., once per month),
-     * fetching training data from the previous month and sending summary emails.
+     * Intended to be executed on a scheduled basis, this method collects training data
+     * from the last calendar month and emails a personalized report to each user.
      * </p>
      */
     void sendMonthlyReports();

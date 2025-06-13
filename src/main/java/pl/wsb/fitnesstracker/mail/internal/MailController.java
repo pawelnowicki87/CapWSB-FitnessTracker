@@ -10,8 +10,8 @@ import pl.wsb.fitnesstracker.mail.api.EmailDto;
 import pl.wsb.fitnesstracker.mail.api.EmailService;
 
 /**
- * REST controller for handling email-related operations.
- * Provides endpoints to send emails, including a test email endpoint.
+ * REST controller responsible for handling email-related actions.
+ * Exposes endpoints for sending emails, including a simple test email.
  */
 @RestController
 @RequestMapping("/v1/mails")
@@ -21,10 +21,11 @@ public class MailController {
     private final EmailService emailService;
 
     /**
-     * Endpoint to send a test email to a specified recipient.
+     * Sends a test email to the specified recipient.
+     * Intended to verify that the email sending functionality works as expected.
      *
-     * @param to The email address to which the test email will be sent.
-     * @return ResponseEntity with a success message indicating that the test email was sent.
+     * @param to The recipient's email address.
+     * @return ResponseEntity with a confirmation message.
      */
     @PostMapping("/send-test")
     public ResponseEntity<String> sendTestEmail(@RequestParam String to) {
@@ -37,3 +38,4 @@ public class MailController {
         return ResponseEntity.ok("Test email sent to " + to);
     }
 }
+

@@ -14,22 +14,19 @@ import pl.wsb.fitnesstracker.user.internal.UserRepository;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of the {@link ReportService} interface responsible for
- * generating and sending monthly training summary reports to users.
+ * Service implementation for generating and emailing monthly training reports to users.
+ *
  * <p>
- * This service fetches all users and their training sessions from the
- * previous month, calculates summary statistics such as total trainings,
- * training dates, and total training time, and then sends these summaries
- * via email to each user.
- * </p>
- * <p>
- * The report sending is scheduled to run automatically at 8:00 AM on the
- * first day of each month.
+ * On the first day of each month at 8:00 AM (UTC), this service collects training data
+ * from the previous calendar month, summarizes it, and sends an email to each user
+ * with their personal training overview.
  * </p>
  */
 @Slf4j
@@ -42,15 +39,8 @@ public class ReportServiceImpl implements ReportService {
     private final EmailService emailService;
 
     /**
-     * Scheduled method that runs at 8:00 AM on the first day of each month
-     * to send monthly training summary reports to all users.
-     * <p>
-     * The method calculates the date range for the previous month and retrieves
-     * all training sessions for each user within that period. It then computes
-     * the number of trainings, the training dates, and the total training time
-     * in minutes. This information is formatted into an email and sent to
-     * each user's registered email address.
-     * </p>
+     * Sends personalized training summaries to all users for the previous month.
+     * Scheduled to run automatically on the 1st of each month at 08:00 (UTC).
      */
     @Scheduled(cron = "0 0 8 1 * ?")
     public void sendMonthlyReports() {
@@ -60,39 +50,35 @@ public class ReportServiceImpl implements ReportService {
         List<User> users = userRepository.findAll();
 
         for (User user : users) {
-            List<TrainingDto> userTrainings = trainingService.findAllByUserId(user.getId()).stream()
-                    .filter(t -> {
-                        LocalDate endDate = t.getEndTime().toInstant()
-                                .atZone(ZoneOffset.UTC)
-                                .toLocalDate();
+            List<TrainingDto> trainingsLastMonth = trainingService.findAllByUserId(user.getId()).stream()
+                    .filter(training -> {
+                        LocalDate endDate = toUtcDate(training.getEndTime());
                         return !endDate.isBefore(startOfMonth) && !endDate.isAfter(endOfMonth);
                     })
                     .collect(Collectors.toList());
 
-            long count = userTrainings.size();
+            long totalTrainings = trainingsLastMonth.size();
 
-            String trainingDates = userTrainings.stream()
-                    .map(t -> t.getEndTime().toInstant()
-                            .atZone(ZoneOffset.UTC)
-                            .toLocalDate().toString())
+            String trainingDates = trainingsLastMonth.stream()
+                    .map(t -> toUtcDate(t.getEndTime()).toString())
                     .sorted()
                     .collect(Collectors.joining(", "));
 
-            long totalMinutes = userTrainings.stream()
+            long totalMinutes = trainingsLastMonth.stream()
                     .mapToLong(t -> Duration.between(
-                            t.getStartTime().toInstant().atZone(ZoneOffset.UTC).toLocalDateTime(),
-                            t.getEndTime().toInstant().atZone(ZoneOffset.UTC).toLocalDateTime()
+                            toUtcDateTime(t.getStartTime()),
+                            toUtcDateTime(t.getEndTime())
                     ).toMinutes())
                     .sum();
 
-            String subject = "Monthly Training Summary";
+            String subject = "Your Monthly Training Summary";
             String content = String.format(
-                    "Hello %s,\n\nIn %s you completed %d training(s).\n\n" +
+                    "Hello %s,\n\nIn %s, you completed %d training(s).\n\n" +
                             "Training Dates: %s\nTotal Time: %d minutes\n\n" +
-                            "Keep up the great work!\nFitness Tracker",
+                            "Keep it up!\n— Fitness Tracker Team",
                     user.getFirstName(),
                     startOfMonth.getMonth(),
-                    count,
+                    totalTrainings,
                     trainingDates.isEmpty() ? "None" : trainingDates,
                     totalMinutes
             );
@@ -100,4 +86,13 @@ public class ReportServiceImpl implements ReportService {
             emailService.send(new EmailDto(user.getEmail(), subject, content));
         }
     }
+
+    private LocalDate toUtcDate(Date date) {
+        return date.toInstant().atZone(ZoneOffset.UTC).toLocalDate();
+    }
+
+    private LocalDateTime toUtcDateTime(Date date) {
+        return date.toInstant().atZone(ZoneOffset.UTC).toLocalDateTime();
+    }
 }
+
